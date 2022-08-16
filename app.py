@@ -83,12 +83,12 @@ if __name__ == "__main__":
                         default="file://test-data/sgptsimovieS01.a1.20160726.000000.mpg")
 #                        default="/app/test-data/sgptsimovieS01.a1.20160726.000000.mpg")   
     parser.add_argument('--i', type=int, 
-                        help='Time skip in seconds.', default=30)
-    parser.add_argument('--k', type=int, 
-                        help='kxk image sectors used for CMV computation.',
-                        default=10)
-    #parser.add_argument('--l', type=int,
-    #                    help='square block length, lxl in pixels.', default=200)
+                        help='Time skip in seconds. (interval)', default=30)
+    parser.add_argument('--j', type=int, 
+                        help='jxj image sectors used for CMV computation. (block length)',
+                        default=12)
+    parser.add_argument('--k', type=int,
+                        help='Image crop-fraction to keep.', default=0.9)
     parser.add_argument('--c', type=int,
                         help='RGB channels, 0=R, 1=G, 2=B', default=0)
     

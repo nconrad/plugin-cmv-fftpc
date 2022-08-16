@@ -8,21 +8,23 @@ import sys
 import numpy as np
 
 
-def getInfoDict(args, NDist=1, error_thres=6, eps=0.2):
+def getInfoDict(args, NDist=1, error_thres=None, eps=0.2):
     """ Takes input args and save it in a dictionary.
     """
     inf = dict()
     inf['input'] = args.input
-    inf['nblock'] = args.k
-    #inf['block_len'] = args.l
     inf['interval'] = args.i
+    inf['nblock'] = args.j
+    inf['crop_frac'] = args.k
     inf['channel'] = args.c
+    
     
     inf['v_max']= int(np.ceil(inf['block_len']/3))
     inf['WS05-neighborhood_dist'] = NDist
     inf['WS05-eps'] = eps
     inf['WS05-error_thres'] = error_thres
     return inf
+
 
 def cropMarginInfo(camera, inf):
     """
@@ -40,12 +42,15 @@ def cropMarginInfo(camera, inf):
 def getCropMargin(inf):
     """ Computes crop area from the settings from 'inf' and appends it to the same dictionary. 
     """
-    small_dim_len = min(inf['frame_height'], inf['frame_width'])
-    inf['block_len'] = np.floor(small_dim_len/inf['nblock'])
+    crop_len = min(inf['frame_height'], inf['frame_width'])*inf['crop_frac']
+    inf['block_len'] = np.floor(crop_len/inf['nblock'])
+    
+    #Here we choose error threshold for NMF based on resolution
+    inf['WS05-error_thres'] = inf['block_len']/6
     
     crop_len = inf['block_len'] * inf['nblock']
     
-    if(crop_len >= small_dim_len):
+    if(crop_len >= crop_len):
         exit("Unexpected Error: The original frame size is smaller than \
              the provided crop-dimensions.")
              
@@ -63,6 +68,7 @@ def getCropMargin(inf):
     inf['block_mid']= mid_loc.astype('int32')
     
     return inf
+
 
 def cropFrame(sample, fcount, inf):
     """ Extract and crops frame using crop margins from the 'inf'.
