@@ -18,9 +18,9 @@ Model loading time: NA
 
 # Arguments
    '--input'     Path to input file or camera URL.  
-   '--i'             Time interval in seconds (Default 30 sec).  
-   '--k'            k x k image blocks used for CMV computation (Default k=10).  
-   '--l'             length of a square block,  l x l in pixels (Default l=40).  
+   '--i'            Time interval in seconds (Default 30 sec).  
+   '--j'            j x j image blocks used for CMV computation (Default j=12).  
+   '--k'            Image area to keep after crop (Default 0.9).  
    '--c'            RGB channels, 0=R, 1=G, 2=B (Default 0 i.e. Red).
 
 # Funding
